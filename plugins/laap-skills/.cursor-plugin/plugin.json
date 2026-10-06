@@ -1,0 +1,7 @@
+{
+  "name": "laap-skills",
+  "displayName": "Local Agentic AI Platform",
+  "version": "0.1.0",
+  "description": "Skill for building and extending the Local Agentic AI Platform (evidence gating, policy, Team Packs).",
+  "skills": ["./skills/"]
+}

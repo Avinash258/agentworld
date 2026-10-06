@@ -83,6 +83,39 @@ In the console:
 4. **One worker by default** — planner keeps CI diagnosis single-agent
 5. **Secrets are never tools** — hard denies in the policy engine
 
+## Agent Skill (import into Cursor / VS Code / Claude / Codex)
+
+Portable skill package:
+
+```text
+skills/local-agentic-ai-platform/
+├── SKILL.md
+└── references/
+```
+
+Auto-discovered in this repo via:
+
+- `.cursor/skills/local-agentic-ai-platform`
+- `.agents/skills/local-agentic-ai-platform`
+- `.claude/skills/` and `.codex/skills/` (compat symlinks)
+
+**Import elsewhere**
+
+```bash
+# Cursor / Agents (personal)
+cp -R skills/local-agentic-ai-platform ~/.cursor/skills/
+
+# Claude Code
+cp -R skills/local-agentic-ai-platform ~/.claude/skills/
+
+# Codex
+cp -R skills/local-agentic-ai-platform ~/.codex/skills/
+```
+
+In Cursor Agent chat, type `/local-agentic-ai-platform` or ask naturally. Full instructions: [`skills/local-agentic-ai-platform/references/import.md`](skills/local-agentic-ai-platform/references/import.md).
+
+For VS Code Copilot, paste the snippet in [`skills/local-agentic-ai-platform/references/copilot-instructions.snippet.md`](skills/local-agentic-ai-platform/references/copilot-instructions.snippet.md) into `.github/copilot-instructions.md`.
+
 ## Layout
 
 ```
@@ -90,6 +123,8 @@ backend/          FastAPI Agent Runtime
 frontend/         Next.js operator console
 packs/            Team Packs (delivery-core, ba-product)
 samples/          CI failure fixtures + payments-api project
+skills/           Portable Agent Skill (SKILL.md) for Cursor and other tools
+plugins/          Cursor marketplace plugin wrapper
 uploads/          Source Project Book (reference)
 ```
 

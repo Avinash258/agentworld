@@ -1,0 +1,11 @@
+{
+  "name": "laap-skills",
+  "owner": "local-agentic-ai-platform",
+  "plugins": [
+    {
+      "name": "laap-skills",
+      "source": "plugins/laap-skills",
+      "description": "Local Agentic AI Platform skill: supervised agents, evidence gating, Team Packs, policy approvals."
+    }
+  ]
+}
