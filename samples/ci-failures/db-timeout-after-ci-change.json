@@ -1,0 +1,30 @@
+{
+  "id": "db-timeout-after-ci-change",
+  "title": "Test database starts too slowly after CI change",
+  "aliases": ["main is red", "db timeout", "test database", "payments"],
+  "project": "sample-payments-api",
+  "category": "infrastructure",
+  "confidence": 0.91,
+  "root_cause": "CI workflow reduced Postgres service healthcheck retries; tests connect before the DB accepts connections.",
+  "explanation": "Yesterday's change to .github/workflows/ci.yml cut the Postgres healthcheck retries from 10 to 2. The app tests race the database and fail with connection timeouts. Application code is not at fault.",
+  "human_label": "infrastructure",
+  "signature": "could not connect to server: Connection refused",
+  "exit_code": 1,
+  "reproduce_command": "pytest tests/test_payments.py -q",
+  "key_lines": [
+    "ERROR tests/test_payments.py::test_capture - psycopg2.OperationalError: could not connect to server: Connection refused",
+    "services.postgres: healthcheck retries reduced from 10 to 2 in ci.yml@a91c2e",
+    "Hypothesis: flaky network — rejected; signature reproduces 5/5 in sandbox"
+  ],
+  "log": "=== CI run #4821 on main ===\nSet up job\nPull postgres:15\nStarting postgres service...\nhealthcheck attempt 1/2 failed\nhealthcheck attempt 2/2 failed\nProceeding without healthy service (continue-on-error unset)\npip install -r requirements.txt\npytest tests/test_payments.py -q\nERROR tests/test_payments.py::test_capture - psycopg2.OperationalError: could not connect to server: Connection refused\nERROR tests/test_payments.py::test_refund - psycopg2.OperationalError: could not connect to server: Connection refused\n=========================== 2 failed in 3.12s ============================\n",
+  "proposed_fix": {
+    "summary": "Restore Postgres healthcheck retries to 10 and add an explicit wait-for-db step before pytest.",
+    "pr_title": "fix(ci): restore Postgres healthcheck retries",
+    "files": [
+      {
+        "path": ".github/workflows/ci.yml",
+        "diff": "retries: 2 -> retries: 10; add wait-for-it localhost:5432"
+      }
+    ]
+  }
+}

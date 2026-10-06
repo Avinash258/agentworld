@@ -1,0 +1,30 @@
+# BA / Product Team Pack — requirement to user stories (Phase 1 demo)
+name: ba-product
+version: "1.0.0"
+owner: ba-lead
+description: Draft user stories and acceptance criteria with source citations.
+roles:
+  - id: requirements-analyst
+    seat: agent
+    permissions:
+      read: ["docs", "tickets:read"]
+      write: []
+    tools:
+      - read_requirement
+      - draft_stories
+      - cite_source
+workflows:
+  - id: requirement-to-stories
+    title: Requirement to user stories
+    evidence_validators:
+      - id: citations
+        type: every_criterion_cites_source
+        description: Every acceptance criterion cites a source
+      - id: invest
+        type: invest_checks
+        description: Stories pass basic INVEST checks
+    human_approval_for:
+      - write_backlog
+    budgets:
+      max_tokens: 40000
+      max_tool_calls: 12

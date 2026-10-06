@@ -1,0 +1,6 @@
+{
+  "build_command": "pip install -r requirements.txt",
+  "test_command": "pytest -q",
+  "exit_code": 0,
+  "note": "Executed in sandbox during onboarding"
+}

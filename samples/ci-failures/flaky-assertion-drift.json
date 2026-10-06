@@ -1,0 +1,29 @@
+{
+  "id": "flaky-assertion-drift",
+  "title": "Flaky cart total assertion",
+  "aliases": ["flaky", "cart total", "assertion"],
+  "project": "sample-payments-api",
+  "category": "test",
+  "confidence": 0.84,
+  "root_cause": "Test compares floating totals without quantizing currency; intermittent rounding differs under parallel workers.",
+  "explanation": "test_cart_total compares raw floats. Under xdist parallelization, aggregation order changes the float error. Fix by quantizing to cents.",
+  "human_label": "test",
+  "signature": "AssertionError: 19.9900000002 != 19.99",
+  "exit_code": 1,
+  "reproduce_command": "pytest -n auto tests/test_cart.py",
+  "key_lines": [
+    "FAILED tests/test_cart.py::test_cart_total - AssertionError: 19.9900000002 != 19.99",
+    "assertion count before=12 after=12 (invariant ok)"
+  ],
+  "log": "pytest -n auto\nFAILED tests/test_cart.py::test_cart_total - AssertionError: 19.9900000002 != 19.99\n",
+  "proposed_fix": {
+    "summary": "Quantize money comparisons to Decimal cents in test_cart_total.",
+    "pr_title": "fix(test): compare cart totals in cents",
+    "files": [
+      {
+        "path": "tests/test_cart.py",
+        "diff": "use Decimal quantize instead of float equality"
+      }
+    ]
+  }
+}

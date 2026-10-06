@@ -1,0 +1,16 @@
+name: CI
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-retries 2
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -r requirements.txt
+      - run: pytest

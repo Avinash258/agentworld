@@ -1,0 +1,39 @@
+# Delivery Core Team Pack — CI / build failure diagnosis
+name: delivery-core
+version: "1.0.0"
+owner: devops-lead
+description: Shared pack for CI and build failure diagnosis across Dev, QA, and DevOps.
+roles:
+  - id: failure-analyst
+    seat: agent
+    permissions:
+      read: ["logs", "ci", "repo:read"]
+      write: [".github/workflows/**", "ci/**"]
+    tools:
+      - read_ci_log
+      - reproduce_in_sandbox
+      - cite_log_lines
+      - propose_fix
+workflows:
+  - id: ci-failure-diagnosis
+    title: CI and build failure diagnosis
+    evidence_validators:
+      - id: reproduced
+        type: sandbox_exit_match
+        description: Failure reproduced in sandbox with matching signature
+      - id: cited_logs
+        type: min_citations
+        min: 2
+        description: At least two cited log lines from the failure
+      - id: classification
+        type: required_fields
+        fields: ["root_cause", "category", "confidence"]
+    human_approval_for:
+      - open_pull_request
+      - paid_rerun
+    budgets:
+      max_tokens: 80000
+      max_tool_calls: 24
+evals:
+  fixture_dir: samples/ci-failures
+  min_agreement: 0.75

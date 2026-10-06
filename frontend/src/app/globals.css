@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #12201c;
+  --bg-2: #1a2e28;
+  --panel: #203530;
+  --panel-2: #274039;
+  --ink: #e8f0ec;
+  --ink-muted: #9db5ab;
+  --line: rgba(196, 168, 106, 0.22);
+  --accent: #c4a86a;
+  --accent-fg: #1a1510;
+  --good: #3d9b74;
+  --warn: #d4a017;
+  --bad: #c45c4a;
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-body), sans-serif;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(196, 168, 106, 0.14), transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, rgba(61, 155, 116, 0.12), transparent 50%),
+    linear-gradient(165deg, #0e1a17 0%, #12201c 45%, #183028 100%);
+  background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(232, 240, 236, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 240, 236, 0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 85%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-line {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.rise {
+  animation: rise 0.55s ease both;
+}
+
+.rise-delay-1 {
+  animation-delay: 0.08s;
+}
+
+.rise-delay-2 {
+  animation-delay: 0.16s;
+}
+
+.rise-delay-3 {
+  animation-delay: 0.24s;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--good);
+  box-shadow: 0 0 0 0 rgba(61, 155, 116, 0.7);
+  animation: pulse-line 1.8s ease infinite;
+}
