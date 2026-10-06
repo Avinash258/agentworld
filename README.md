@@ -116,6 +116,18 @@ In Cursor Agent chat, type `/local-agentic-ai-platform` or ask naturally. Full i
 
 For VS Code Copilot, paste the snippet in [`skills/local-agentic-ai-platform/references/copilot-instructions.snippet.md`](skills/local-agentic-ai-platform/references/copilot-instructions.snippet.md) into `.github/copilot-instructions.md`.
 
+### Publish public GitHub repo + downloadable Release
+
+```bash
+# Requires: gh auth login  (or GH_TOKEN)
+./scripts/publish-to-github.sh
+```
+
+Creates **public** `Avinash258/agentworld` and a Release (`v0.1.0`) with downloadable:
+
+- `SKILL.md`
+- `agentworld-skill.zip` (skill + references)
+
 ## Layout
 
 ```
@@ -125,9 +137,9 @@ packs/            Team Packs (delivery-core, ba-product)
 samples/          CI failure fixtures + payments-api project
 skills/           Portable Agent Skill (SKILL.md) for Cursor and other tools
 plugins/          Cursor marketplace plugin wrapper
+dist/             Release artifacts (SKILL.md + zip)
 uploads/          Source Project Book (reference)
 ```
-
 ## Notes
 
 - No cloud LLM key is required for the demo; diagnosis uses deterministic fixtures and rules so the evidence/policy loop is always demonstrable offline.
